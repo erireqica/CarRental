@@ -1,11 +1,16 @@
 import React from 'react';
+import Navbar from '../components/Navbar';
+
 
 function HomePage() {
   return (
-    <div>
-      <h1>Welcome to Car Rental</h1>
-      <p>This is the homepage.</p>
-    </div>
+    <>
+      <Navbar />
+      <div>
+        <h1>Welcome to Car Rental</h1>
+        <p>This is the homepage.</p>
+      </div>
+    </> 
   );
 }
 
