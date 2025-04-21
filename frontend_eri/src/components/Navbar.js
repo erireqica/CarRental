@@ -15,7 +15,7 @@ function Navbar() {
       <div className="mx-auto px-6 py-4 flex justify-between items-center">
         {/* Brand / Logo */}
         <Link to="/" className="text-2xl font-semibold text-white tracking-wide">
-          BlueRides
+          AutoRent
         </Link>
 
         {/* Nav links */}

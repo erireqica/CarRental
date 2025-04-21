@@ -3,13 +3,23 @@ import { getCars } from '../api/cars';
 import Navbar from '../components/Navbar';
 import CarCard from '../components/CarCard';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 function CarsPage() {
   const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getCars().then(setCars);
+    getCars()
+      .then((data) => {
+        setCars(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -29,7 +39,11 @@ function CarsPage() {
             </button>
           </div>
 
-          {cars.length === 0 ? (
+          {loading ? (
+            <div className="flex justify-center items-center h-60">
+              <p className="text-xl text-gray-500 font-medium">Loading cars...</p>
+            </div>
+          ) : cars.length === 0 ? (
             <div className="flex justify-center items-center h-60">
               <p className="text-xl text-gray-600 font-medium">
                 No cars are currently available. Please check back later.
@@ -44,6 +58,8 @@ function CarsPage() {
           )}
         </div>
       </div>
+
+      <Footer />
     </>
   );
 }
