@@ -3,8 +3,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
 import Footer from '../components/Footer';
+import { toast } from 'react-toastify';
+
 
 function EditCarPage() {
+  
   const { id } = useParams();
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -34,11 +37,11 @@ function EditCarPage() {
     e.preventDefault();
     try {
       await axios.put(`http://127.0.0.1:8000/api/cars/${id}`, form);
-      alert('✅ Car updated successfully!');
+      toast.success('Car updated successfully!');
       navigate('/admin');
     } catch (err) {
       console.error(err);
-      alert('❌ Failed to update car');
+      toast.error('Failed to update car');
     }
   };
 

@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import CarCard from '../components/CarCard';
 import Footer from '../components/Footer';
+import { toast } from 'react-toastify';
 
 function AdminDashboard() {
   const [cars, setCars] = useState([]);
@@ -30,7 +31,7 @@ function AdminDashboard() {
       setCars(cars.filter((car) => car.id !== id));
     } catch (err) {
       console.error(err);
-      alert('Failed to delete car');
+      toast.error('Failed to delete car');
     }
   };
 

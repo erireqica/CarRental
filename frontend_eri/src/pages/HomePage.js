@@ -39,10 +39,12 @@ function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {/* SUV */}
             <div
+              onClick={() => navigate('/cars?type=SUV')}
               className="relative h-64 bg-cover bg-center rounded-lg shadow-lg"
               style={{
                 backgroundImage:
                   "url('https://www.kbb.com/wp-content/uploads/2024/01/2024-chevrolet-traverse-rs-red-front-left-3qtr.jpg?w=757')",
+                  cursor: 'pointer',
               }}
             >
               <div className="absolute inset-0 bg-black bg-opacity-30 rounded-lg flex items-center justify-center">
@@ -54,10 +56,12 @@ function HomePage() {
 
             {/* Sedan */}
             <div
+              onClick={() => navigate('/cars?type=Sedan')}
               className="relative h-64 bg-cover bg-center rounded-lg shadow-lg"
               style={{
                 backgroundImage:
                   "url('https://www.usnews.com/object/image/00000190-bd16-dc6b-a395-fd9782870000/2025-honda-civic-sedan-sport-hybrid.jpg?update-time=1721159286933&size=responsive640')",
+                  cursor: 'pointer',
               }}
             >
               <div className="absolute inset-0 bg-black bg-opacity-30 rounded-lg flex items-center justify-center">
@@ -69,10 +73,12 @@ function HomePage() {
 
             {/* Hatchback */}
             <div
+              onClick={() => navigate('/cars?type=Hatchback')}
               className="relative h-64 bg-cover bg-center rounded-lg shadow-lg"
               style={{
                 backgroundImage:
                   "url('https://www.vw.com/content/dam/onehub_pkw/importers/us/en/showrooms/golf-gti/2024/golf-gti-380-mood-gallery/VW_NGW6_Showroom_GTI_380_MoodGallery-3.jpg')",
+                  cursor: 'pointer',
               }}
             >
               <div className="absolute inset-0 bg-black bg-opacity-30 rounded-lg flex items-center justify-center">
