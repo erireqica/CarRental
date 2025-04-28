@@ -23,7 +23,6 @@ function CarsPage() {
     setSelectedType(type || 'All');
   }, [type]);
 
-  // Filtering logic
   const filteredCars =
     selectedType === 'All'
       ? cars
@@ -52,7 +51,6 @@ function CarsPage() {
             </button>
           </div>
 
-          {/* Filter Buttons */}
           <div className="flex flex-wrap gap-3 mb-8">
             {types.map((type) => (
               <button

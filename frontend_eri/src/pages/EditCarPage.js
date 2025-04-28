@@ -40,7 +40,6 @@ function EditCarPage() {
       toast.success('Car updated successfully!');
       navigate('/admin');
     } catch (err) {
-      console.error(err);
       toast.error('Failed to update car');
     }
   };
@@ -108,7 +107,6 @@ function EditCarPage() {
               <span>Available</span>
             </label>
 
-            {/* Image Preview */}
             {form.image_url && (
               <div className="mb-4 flex justify-center">
                 <img

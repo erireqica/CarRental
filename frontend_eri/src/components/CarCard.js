@@ -1,16 +1,12 @@
 function CarCard({ car }) {
-    console.log('car:', car);
-    console.log('image URL:', car.image_url);
     return (
       <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-        {/* Image placeholder */}
         <img
             src={car.image_url ? car.image_url : `https://via.placeholder.com/400x200?text=${car.name}`}
             alt={car.name}
             className="w-full h-40 object-cover"
         />
   
-        {/* Car info */}
         <div className="p-4">
           <h2 className="text-xl font-bold mb-1">{car.name}</h2>
           <p className="text-sm text-gray-600 mb-1">Brand: {car.brand}</p>

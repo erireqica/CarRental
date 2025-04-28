@@ -31,7 +31,6 @@ function AddCarPage() {
       alert('✅ Car added successfully!');
       navigate('/admin');
     } catch (err) {
-      console.error(err);
       alert('❌ Error adding car');
     }
   };
@@ -99,7 +98,6 @@ function AddCarPage() {
               <span>Available</span>
             </label>
 
-            {/* Image Preview */}
             {form.image_url && (
               <div className="mb-4 flex justify-center">
                 <img

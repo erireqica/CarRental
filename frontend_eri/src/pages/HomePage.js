@@ -10,7 +10,6 @@ function HomePage() {
     <>
       <Navbar />
 
-      {/* Hero Section */}
       <section
         className="relative text-white py-24 px-6 text-center bg-cover bg-center"
         style={{
@@ -37,7 +36,6 @@ function HomePage() {
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {/* SUV */}
             <div
               onClick={() => navigate('/cars?type=SUV')}
               className="relative h-64 bg-cover bg-center rounded-lg shadow-lg"
@@ -54,7 +52,6 @@ function HomePage() {
               </div>
             </div>
 
-            {/* Sedan */}
             <div
               onClick={() => navigate('/cars?type=Sedan')}
               className="relative h-64 bg-cover bg-center rounded-lg shadow-lg"
@@ -71,7 +68,6 @@ function HomePage() {
               </div>
             </div>
 
-            {/* Hatchback */}
             <div
               onClick={() => navigate('/cars?type=Hatchback')}
               className="relative h-64 bg-cover bg-center rounded-lg shadow-lg"
@@ -93,7 +89,6 @@ function HomePage() {
 
 
 
-      {/* Why Choose Section */}
       <section className="pt-16 pb-20 bg-gray-100">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-blue-700 mb-10">Why Choose AutoRent?</h2>

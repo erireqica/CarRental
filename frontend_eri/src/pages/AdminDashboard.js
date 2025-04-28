@@ -19,7 +19,6 @@ function AdminDashboard() {
         setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
         setLoading(false);
       });
   }, []);
@@ -30,7 +29,6 @@ function AdminDashboard() {
       await axios.delete(`http://127.0.0.1:8000/api/cars/${id}`);
       setCars(cars.filter((car) => car.id !== id));
     } catch (err) {
-      console.error(err);
       toast.error('Failed to delete car');
     }
   };
