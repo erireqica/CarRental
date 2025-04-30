@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-function CarCard({ car, canEdit, canManageBookings }) {
+function CarCard({ car }) {
   const navigate = useNavigate();
   const { user, setIsLoginModalOpen } = useAuth();
 
@@ -13,15 +13,6 @@ function CarCard({ car, canEdit, canManageBookings }) {
     }
     // Implement booking logic here
     alert('Booking functionality to be implemented');
-  };
-
-  const handleEdit = () => {
-    navigate(`/cars/edit/${car.id}`);
-  };
-
-  const handleToggleAvailability = () => {
-    // Implement availability toggle logic here
-    alert('Availability toggle functionality to be implemented');
   };
 
   return (
@@ -52,28 +43,6 @@ function CarCard({ car, canEdit, canManageBookings }) {
               Book Now
             </button>
           )}
-
-          {canEdit && (
-            <button
-              onClick={handleEdit}
-              className="w-full bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700 transition"
-            >
-              Edit Details
-            </button>
-          )}
-
-          {canManageBookings && (
-            <button
-              onClick={handleToggleAvailability}
-              className={`w-full py-2 px-4 rounded transition ${
-                car.available
-                  ? 'bg-red-600 text-white hover:bg-red-700'
-                  : 'bg-green-600 text-white hover:bg-green-700'
-              }`}
-            >
-              {car.available ? 'Mark as Unavailable' : 'Mark as Available'}
-            </button>
-          )}
         </div>
       </div>
     </div>
@@ -81,4 +50,3 @@ function CarCard({ car, canEdit, canManageBookings }) {
 }
 
 export default CarCard;
-  
