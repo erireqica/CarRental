@@ -1,22 +1,38 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
+// Mock users data - same as in UserManagementPage
+const mockUsers = [
+  { id: 1, email: 'super@admin.com', password: 'admin123', role: 'super_admin' },
+  { id: 2, email: 'admin@example.com', password: 'admin123', role: 'admin' },
+  { id: 3, email: 'user@example.com', password: 'user123', role: 'user' },
+];
+
 const LoginModal = () => {
   const { login, isLoginModalOpen, setIsLoginModalOpen } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+  const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would typically make an API call to verify credentials
-    // For demo purposes, we'll use mock data
-    const mockUser = {
-      email: formData.email,
-      role: 'user', // This would come from your backend
-    };
-    login(mockUser);
+    setError('');
+
+    const user = mockUsers.find(
+      u => u.email === formData.email && u.password === formData.password
+    );
+
+    if (user) {
+      login({
+        id: user.id,
+        email: user.email,
+        role: user.role
+      });
+    } else {
+      setError('Invalid email or password');
+    }
   };
 
   if (!isLoginModalOpen) return null;
@@ -36,6 +52,12 @@ const LoginModal = () => {
           </button>
         </div>
         
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
+            {error}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -72,6 +94,15 @@ const LoginModal = () => {
             Login
           </button>
         </form>
+
+        <div className="mt-4 text-sm text-gray-600">
+          <p>Demo accounts:</p>
+          <ul className="mt-2 space-y-1">
+            <li>Super Admin: super@admin.com / admin123</li>
+            <li>Admin: admin@example.com / admin123</li>
+            <li>User: user@example.com / user123</li>
+          </ul>
+        </div>
       </div>
     </div>
   );

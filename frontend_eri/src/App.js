@@ -4,6 +4,8 @@ import CarsPage from './pages/CarsPage';
 import AddCarPage from './pages/AddCarPage';
 import EditCarPage from './pages/EditCarPage';
 import AdminDashboard from './pages/AdminDashboard';
+import UserManagementPage from './pages/UserManagementPage';
+import SignupPage from './pages/SignupPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './context/AuthContext';
@@ -19,6 +21,8 @@ function App() {
           <Route path="/cars/add" element={<AddCarPage />} />
           <Route path="/cars/edit/:id" element={<EditCarPage />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/users" element={<UserManagementPage />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="/edit/:id" element={<EditCarPage />} />
         </Routes>
         <LoginModal />
