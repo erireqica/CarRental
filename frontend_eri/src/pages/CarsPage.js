@@ -5,11 +5,13 @@ import CarCard from '../components/CarCard';
 import { useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
 import { useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 function CarsPage() {
   const [cars, setCars] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, hasPermission, setIsLoginModalOpen } = useAuth();
 
   const { type } = queryString.parse(location.search);
 
@@ -34,6 +36,20 @@ function CarsPage() {
     navigate(`?type=${type === 'All' ? '' : type}`);
   };
 
+  const handleManageCars = () => {
+    if (!user) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+
+    if (hasPermission('admin')) {
+      navigate('/admin');
+    } else {
+      // Show error message or notification that user doesn't have permission
+      alert('You do not have permission to manage cars');
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -44,10 +60,10 @@ function CarsPage() {
               Discover Our Fleet
             </h1>
             <button
-              onClick={() => navigate('/admin')}
+              onClick={handleManageCars}
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 shadow"
             >
-              Manage Cars
+              {user ? 'Manage Cars' : 'View/Manage Cars'}
             </button>
           </div>
 
@@ -76,7 +92,12 @@ function CarsPage() {
           ) : (
             <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {filteredCars.map((car) => (
-                <CarCard key={car.id} car={car} />
+                <CarCard 
+                  key={car.id} 
+                  car={car} 
+                  canEdit={hasPermission('super_admin')}
+                  canManageBookings={hasPermission('admin')}
+                />
               ))}
             </div>
           )}
