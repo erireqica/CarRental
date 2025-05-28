@@ -15,3 +15,5 @@ use App\Http\Controllers\HomepageContentController;
 Route::get('/homepage', [HomepageContentController::class, 'index']);
 
 Route::post('/homepage/seed', [HomepageContentController::class, 'seed']);
+
+Route::put('/homepage', [HomepageContentController::class, 'update']);

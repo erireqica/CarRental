@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './context/AuthContext';
 import LoginModal from './components/LoginModal';
+import HomeDashboard from './pages/HomeDashboard';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/users" element={<UserManagementPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/edit/:id" element={<EditCarPage />} />
+          <Route path="/dashboard/homepage" element={<HomeDashboard />} />
         </Routes>
         <LoginModal />
         <ToastContainer

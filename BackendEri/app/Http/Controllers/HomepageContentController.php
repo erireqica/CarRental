@@ -5,9 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\HomepageContent;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class HomepageContentController extends Controller
 {
+
+    public function update(Request $request): JsonResponse
+    {
+        $content = HomepageContent::first();
+
+        if (!$content) {
+            return response()->json(['error' => 'Content not found'], 404);
+        }
+
+        $content->update($request->all());
+
+        return response()->json(['message' => 'Homepage content updated successfully']);
+    }
+
     public function index(): JsonResponse
     {
         return response()->json(HomepageContent::first());
@@ -37,6 +52,10 @@ class HomepageContentController extends Controller
 
             'card3_title' => 'Hatchbacks for Everyday Drives',
             'card3_image' => 'https://www.vw.com/content/dam/onehub_pkw/importers/us/en/showrooms/golf-gti/2024/golf-gti-380-mood-gallery/VW_NGW6_Showroom_GTI_380_MoodGallery-3.jpg',
+
+            'card1_type' => 'SUV',
+            'card2_type' => 'Sedan',
+            'card3_type' => 'Hatchback',
 
             // WHY CHOOSE US section
             'card4_title' => 'Reliable Vehicles',

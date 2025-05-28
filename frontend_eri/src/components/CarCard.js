@@ -35,14 +35,17 @@ function CarCard({ car }) {
         </span>
 
         <div className="mt-4 space-y-2">
-          {car.available && (
-            <button
-              onClick={handleBook}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
-            >
-              Book Now
-            </button>
-          )}
+          <button
+            onClick={car.available ? handleBook : undefined}
+            disabled={!car.available}
+            className={`w-full py-2 px-4 rounded transition
+              ${car.available
+                ? 'bg-blue-600 text-white hover:bg-blue-700 cursor-pointer'
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              }`}
+          >
+            Book Now
+          </button>
         </div>
       </div>
     </div>
