@@ -28,6 +28,7 @@ function AdminDashboard() {
     try {
       await axios.delete(`http://127.0.0.1:8000/api/cars/${id}`);
       setCars(cars.filter((car) => car.id !== id));
+      toast.success('Car deleted successfully');  // <-- Add this line
     } catch (err) {
       toast.error('Failed to delete car');
     }

@@ -3,6 +3,8 @@ import Navbar from '../components/Navbar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AddCarPage() {
   const [form, setForm] = useState({
@@ -28,10 +30,10 @@ function AddCarPage() {
     e.preventDefault();
     try {
       await axios.post('http://127.0.0.1:8000/api/cars', form);
-      alert('✅ Car added successfully!');
+      toast.success('✅ Car added successfully!');   // <-- toast success
       navigate('/admin');
     } catch (err) {
-      alert('❌ Error adding car');
+      toast.error('❌ Error adding car');           // <-- toast error
     }
   };
 

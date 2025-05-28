@@ -3,9 +3,11 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext'; // Adjust path if needed
 
 function HomePage() {
   const navigate = useNavigate();
+  const { user, hasPermission } = useAuth();
   const [content, setContent] = useState(null);
 
   useEffect(() => {
@@ -32,7 +34,18 @@ function HomePage() {
         style={{ backgroundImage: `url('${content.hero_background_url}')` }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-60"></div>
-        <div className="relative z-10 max-w-4xl mx-auto">
+
+        {/* Edit button top-right */}
+        {(user && (hasPermission('admin') || hasPermission('super_admin'))) && (
+          <button
+            onClick={() => navigate('/dashboard/homepage')}
+            className="absolute top-6 right-6 bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-yellow-500 transition z-20"
+          >
+            Edit Homepage
+          </button>
+        )}
+
+        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center gap-6">
           <h1 className="text-5xl font-extrabold mb-4">{content.hero_title}</h1>
           <p className="text-lg mb-6">{content.hero_subtitle}</p>
           <button
