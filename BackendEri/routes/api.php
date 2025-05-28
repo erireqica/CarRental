@@ -12,5 +12,4 @@ Route::apiResource('cars', CarController::class);
 
 use App\Http\Controllers\HomepageContentController;
 
-Route::get('/home-content', [HomepageContentController::class, 'index']);
-
+Route::get('/homepage', [HomepageContentController::class, 'index']);
