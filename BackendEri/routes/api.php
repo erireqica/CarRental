@@ -13,3 +13,5 @@ Route::apiResource('cars', CarController::class);
 use App\Http\Controllers\HomepageContentController;
 
 Route::get('/homepage', [HomepageContentController::class, 'index']);
+
+Route::post('/homepage/seed', [HomepageContentController::class, 'seed']);
