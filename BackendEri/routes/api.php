@@ -9,3 +9,8 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::apiResource('cars', CarController::class);
+
+use App\Http\Controllers\HomepageContentController;
+
+Route::get('/home-content', [HomepageContentController::class, 'index']);
+
