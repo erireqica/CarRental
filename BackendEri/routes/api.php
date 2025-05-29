@@ -17,3 +17,8 @@ Route::get('/homepage', [HomepageContentController::class, 'index']);
 Route::post('/homepage/seed', [HomepageContentController::class, 'seed']);
 
 Route::put('/homepage', [HomepageContentController::class, 'update']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/bookings', [BookingController::class, 'store']);
+    Route::get('/bookings', [BookingController::class, 'index']);
+});
