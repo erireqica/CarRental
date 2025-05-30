@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import BookingForm from './BookingForm';
 
 function CarCard({ car }) {
   const navigate = useNavigate();
   const { user, setIsLoginModalOpen } = useAuth();
+  const [showBookingForm, setShowBookingForm] = useState(false);
 
   const handleBook = () => {
     if (!user) {
       setIsLoginModalOpen(true);
       return;
     }
-    // Implement booking logic here
-    alert('Booking functionality to be implemented');
+    setShowBookingForm(true);
+  };
+
+  const handleBookingComplete = () => {
+    setShowBookingForm(false);
   };
 
   return (
@@ -35,17 +40,24 @@ function CarCard({ car }) {
         </span>
 
         <div className="mt-4 space-y-2">
-          <button
-            onClick={car.available ? handleBook : undefined}
-            disabled={!car.available}
-            className={`w-full py-2 px-4 rounded transition
-              ${car.available
-                ? 'bg-blue-600 text-white hover:bg-blue-700 cursor-pointer'
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              }`}
-          >
-            Book Now
-          </button>
+          {!showBookingForm ? (
+            <button
+              onClick={car.available ? handleBook : undefined}
+              disabled={!car.available}
+              className={`w-full py-2 px-4 rounded transition
+                ${car.available
+                  ? 'bg-blue-600 text-white hover:bg-blue-700 cursor-pointer'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+            >
+              Book Now
+            </button>
+          ) : (
+            <BookingForm 
+              car={car} 
+              onBookingComplete={handleBookingComplete}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -2,37 +2,31 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../context/AuthContext';
+import { register } from '../api/users';
 
 function SignupPage() {
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     password: '',
-    confirmPassword: '',
+    password_confirmation: '',
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return;
+    try {
+      const { user, token } = await register(formData);
+      localStorage.setItem('token', token);
+      login({ email: formData.email, password: formData.password });
+      navigate('/cars');
+    } catch (error) {
+      setError(error.response?.data?.message || 'Registration failed. Please try again.');
     }
-
-    // In a real app, this would be an API call to create the user
-    // For demo purposes, we'll just log them in as a regular user
-    const newUser = {
-      id: Date.now(), // Generate a temporary ID
-      email: formData.email,
-      password: formData.password,
-      role: 'user'
-    };
-
-    login(newUser);
-    navigate('/cars');
   };
 
   return (
@@ -50,6 +44,20 @@ function SignupPage() {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  required
+                />
+              </div>
+
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                   Email
@@ -79,14 +87,14 @@ function SignupPage() {
               </div>
 
               <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="password_confirmation" className="block text-sm font-medium text-gray-700">
                   Confirm Password
                 </label>
                 <input
                   type="password"
-                  id="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                  id="password_confirmation"
+                  value={formData.password_confirmation}
+                  onChange={(e) => setFormData({ ...formData, password_confirmation: e.target.value })}
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                   required
                 />

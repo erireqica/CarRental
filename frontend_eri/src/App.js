@@ -6,6 +6,7 @@ import EditCarPage from './pages/EditCarPage';
 import AdminDashboard from './pages/AdminDashboard';
 import UserManagementPage from './pages/UserManagementPage';
 import SignupPage from './pages/SignupPage';
+import BookingHistoryPage from './pages/BookingHistoryPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './context/AuthContext';
@@ -26,6 +27,7 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/edit/:id" element={<EditCarPage />} />
           <Route path="/dashboard/homepage" element={<HomeDashboard />} />
+          <Route path="/bookings" element={<BookingHistoryPage />} />
         </Routes>
         <LoginModal />
         <ToastContainer

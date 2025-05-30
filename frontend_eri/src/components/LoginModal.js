@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
-// Mock users data - same as in UserManagementPage
-const mockUsers = [
-  { id: 1, email: 'super@admin.com', password: 'admin123', role: 'super_admin' },
-  { id: 2, email: 'admin@example.com', password: 'admin123', role: 'admin' },
-  { id: 3, email: 'user@example.com', password: 'user123', role: 'user' },
-];
-
 const LoginModal = () => {
   const { login, isLoginModalOpen, setIsLoginModalOpen } = useAuth();
   const [formData, setFormData] = useState({
@@ -16,22 +9,15 @@ const LoginModal = () => {
   });
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    const user = mockUsers.find(
-      u => u.email === formData.email && u.password === formData.password
-    );
-
-    if (user) {
-      login({
-        id: user.id,
-        email: user.email,
-        role: user.role
-      });
-    } else {
-      setError('Invalid email or password');
+    try {
+      await login(formData);
+    } catch (error) {
+      console.error('Login error:', error);
+      setError(error.response?.data?.message || 'Invalid email or password');
     }
   };
 
@@ -95,13 +81,19 @@ const LoginModal = () => {
           </button>
         </form>
 
-        <div className="mt-4 text-sm text-gray-600">
-          <p>Demo accounts:</p>
-          <ul className="mt-2 space-y-1">
-            <li>Super Admin: super@admin.com / admin123</li>
-            <li>Admin: admin@example.com / admin123</li>
-            <li>User: user@example.com / user123</li>
-          </ul>
+        <div className="mt-4 text-center">
+          <p className="text-sm text-gray-600">
+            Don't have an account?{' '}
+            <button
+              onClick={() => {
+                setIsLoginModalOpen(false);
+                window.location.href = '/signup';
+              }}
+              className="text-blue-600 hover:text-blue-700 font-medium"
+            >
+              Sign up
+            </button>
+          </p>
         </div>
       </div>
     </div>
