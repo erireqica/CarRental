@@ -36,3 +36,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/users/{id}', [App\Http\Controllers\UserController::class, 'deleteUser']);
     Route::post('/logout', [App\Http\Controllers\UserController::class, 'logout']);
 });
+Route::get('/about-us', [AboutUsContentController::class, 'index']);
+Route::put('/about-us', [AboutUsContentController::class, 'update']);
