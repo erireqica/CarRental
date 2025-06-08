@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import axios from 'axios';
-import { useAuth } from '../context/AuthContext'; // Adjust path if needed
+import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { getAboutUsContent } from '../api/aboutus';
 
 function AboutUs() {
   const [content, setContent] = useState(null);
@@ -13,7 +13,7 @@ function AboutUs() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/about-us')
+    getAboutUsContent()
       .then(res => {
         if (res.data && Object.keys(res.data).length > 0) {
           setContent(res.data);

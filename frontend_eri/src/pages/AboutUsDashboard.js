@@ -27,12 +27,22 @@ function AboutUsDashboard() {
     try {
       await axios.put('http://127.0.0.1:8000/api/about-us', content);
       toast.success('About Us content updated!');
-    } catch {
-      toast.error('Failed to update About Us content');
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || '';
+  
+      if (errorMessage.includes('Data too long for column') && errorMessage.includes('image_url')) {
+        toast.error('Image URL is too long. Please try a different image link.');
+      } else if (err.response?.data?.errors?.image_url) {
+        toast.error(`Image URL Error: ${err.response.data.errors.image_url[0]}`);
+      } else {
+        toast.error('Failed to update About Us content');
+      }
+  
+      console.error('Update error:', err.response || err);
     }
     setSaving(false);
   };
-
+  
   return (
     <>
       <Navbar />
