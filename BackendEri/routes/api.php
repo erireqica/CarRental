@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\HomepageContentController;
+use App\Http\Controllers\AboutUsContentController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();

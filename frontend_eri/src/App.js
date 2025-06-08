@@ -12,6 +12,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './context/AuthContext';
 import LoginModal from './components/LoginModal';
 import HomeDashboard from './pages/HomeDashboard';
+import AboutUs from './pages/AboutUs';
+import AboutUsDashboard from './pages/AboutUsDashboard';
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
           <Route path="/edit/:id" element={<EditCarPage />} />
           <Route path="/dashboard/homepage" element={<HomeDashboard />} />
           <Route path="/bookings" element={<BookingHistoryPage />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/dashboard/about-us" element={<AboutUsDashboard />} />
         </Routes>
         <LoginModal />
         <ToastContainer
