@@ -25,6 +25,7 @@ function Navbar() {
         <div className="flex items-center space-x-4">
           <Link to="/" className={navLinkStyle('/')}>Home</Link>
           <Link to="/cars" className={navLinkStyle('/cars')}>Cars</Link>
+          <Link to="/about-us" className={navLinkStyle('/about-us')}>About Us</Link>
           {user && hasPermission('super_admin') && (
             <Link to="/users" className={navLinkStyle('/users')}>Dashboard</Link>
           )}
