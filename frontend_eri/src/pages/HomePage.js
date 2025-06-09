@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext'; // Adjust path if needed
+import { useAuth } from '../context/AuthContext'; 
 
 function HomePage() {
   const navigate = useNavigate();
@@ -28,14 +28,12 @@ function HomePage() {
     <>
       <Navbar />
 
-      {/* Hero Section */}
       <section
         className="relative text-white py-24 px-6 text-center bg-cover bg-center"
         style={{ backgroundImage: `url('${content.hero_background_url}')` }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-60"></div>
 
-        {/* Edit button top-right */}
         {(user && (hasPermission('admin') || hasPermission('super_admin'))) && (
           <button
             onClick={() => navigate('/dashboard/homepage')}
@@ -57,7 +55,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Categories Section */}
       <section className="pt-14 pb-20 bg-white">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h2 className="text-3xl font-bold text-blue-700 mb-10">
@@ -86,7 +83,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Why Choose Us Section (card4–card7) */}
       <section className="pt-16 pb-20 bg-gray-100">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-blue-700 mb-10">Why Choose AutoRent?</h2>

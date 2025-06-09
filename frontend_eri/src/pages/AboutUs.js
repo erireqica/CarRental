@@ -58,21 +58,22 @@ function AboutUs() {
     <>
       <Navbar />
 
-      {(user && hasPermission('admin')) && (
-        <div className="fixed top-[90px] right-6 z-50">
-          <button
-            onClick={() => navigate('/dashboard/about-us')}
-            className="bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-yellow-500 transition shadow"
-          >
-            Edit About Us
-          </button>
-        </div>
-      )}
+      
 
       <section
         className="relative bg-blue-900 text-white py-28 px-6 text-center"
         style={{ backgroundImage: image_url ? `url('${image_url}')` : "url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1470&q=80')", backgroundSize: 'cover', backgroundPosition: 'center' }}
       >
+
+        {(user && (hasPermission('admin') || hasPermission('super_admin'))) && (
+          <button
+            onClick={() => navigate('/dashboard/about-us')}
+            className="absolute top-6 right-6 bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-yellow-500 transition z-20"
+          >
+            Edit About Us
+          </button>
+        )}
+
         <div className="absolute inset-0 bg-black bg-opacity-70"></div>
         <div className="relative max-w-3xl mx-auto">
           <h1 className="text-5xl font-bold mb-4">{title}</h1>
@@ -90,7 +91,7 @@ function AboutUs() {
       <section className="bg-gray-100 py-16">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-4xl font-bold mb-12 text-center text-blue-800">Our Journey</h2>
-          <ol className="relative border-l-2 border-blue-600 max-w-4xl mx-auto space-y-10">
+          <ol className="relative border-l-2 border-blue-400 max-w-4xl mx-auto space-y-10">
             {[ 
               { year: journey_1_year, event: journey_1_event }, 
               { year: journey_2_year, event: journey_2_event }, 
