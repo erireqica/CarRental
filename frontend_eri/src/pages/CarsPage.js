@@ -2,23 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { getCars } from '../api/cars';
 import Navbar from '../components/Navbar';
 import CarCard from '../components/CarCard';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import { useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 function CarsPage() {
   const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
   const { user, hasPermission, setIsLoginModalOpen } = useAuth();
 
   const { type } = queryString.parse(location.search);
-
   const [selectedType, setSelectedType] = useState(type || 'All');
 
   useEffect(() => {
-    getCars().then(setCars);
+    getCars()
+      .then(setCars)
+      .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
@@ -45,7 +46,6 @@ function CarsPage() {
     if (hasPermission('admin')) {
       navigate('/admin');
     } else {
-      // Show error message or notification that user doesn't have permission
       alert('You do not have permission to manage cars');
     }
   };
@@ -60,12 +60,12 @@ function CarsPage() {
               Discover Our Fleet
             </h1>
             {user && hasPermission('super_admin') && (
-            <button
-              onClick={handleManageCars}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 shadow"
-            >
-              Manage Cars
-            </button>
+              <button
+                onClick={handleManageCars}
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 shadow"
+              >
+                Manage Cars
+              </button>
             )}
           </div>
 
@@ -85,7 +85,11 @@ function CarsPage() {
             ))}
           </div>
 
-          {filteredCars.length === 0 ? (
+          {loading ? (
+            <div className="flex justify-center items-center h-60">
+              <p className="text-lg text-gray-500">Loading cars...</p>
+            </div>
+          ) : filteredCars.length === 0 ? (
             <div className="flex justify-center items-center h-60">
               <p className="text-xl text-gray-600 font-medium">
                 No cars available for this category.

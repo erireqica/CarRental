@@ -30,10 +30,10 @@ function AddCarPage() {
     e.preventDefault();
     try {
       await axios.post('http://127.0.0.1:8000/api/cars', form);
-      toast.success('✅ Car added successfully!');   // <-- toast success
+      toast.success('✅ Car added successfully!'); 
       navigate('/admin');
     } catch (err) {
-      toast.error('❌ Error adding car');           // <-- toast error
+      toast.error('❌ Error adding car');          
     }
   };
 

@@ -28,21 +28,27 @@ function AboutUs() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div className="text-center mt-20">Loading About Us...</div>;
-  if (error) return <div className="text-center mt-20 text-red-600">{error}</div>;
+  if (loading || error) {
+    return (
+      <>
+        <Navbar />
+        <div className="flex items-center justify-center h-[70vh] text-gray-600 text-lg font-medium">
+          {error || 'Loading About Us...'}
+        </div>
+      </>
+    );
+  }
 
   const {
     title = 'Our Story',
     description = '',
     image_url = '',
-
     journey_1_year,
     journey_1_event,
     journey_2_year,
     journey_2_event,
     journey_3_year,
     journey_3_event,
-
     team_1_name,
     team_1_role,
     team_1_image,
@@ -58,13 +64,16 @@ function AboutUs() {
     <>
       <Navbar />
 
-      
-
       <section
         className="relative bg-blue-900 text-white py-28 px-6 text-center"
-        style={{ backgroundImage: image_url ? `url('${image_url}')` : "url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1470&q=80')", backgroundSize: 'cover', backgroundPosition: 'center' }}
+        style={{
+          backgroundImage: image_url
+            ? `url('${image_url}')`
+            : "url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1470&q=80')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
       >
-
         {(user && (hasPermission('admin') || hasPermission('super_admin'))) && (
           <button
             onClick={() => navigate('/dashboard/about-us')}
@@ -78,7 +87,8 @@ function AboutUs() {
         <div className="relative max-w-3xl mx-auto">
           <h1 className="text-5xl font-bold mb-4">{title}</h1>
           <p className="text-lg font-light leading-relaxed">
-            {description.split('\n')[0] || 'Founded in 2010, AutoRent has grown from a small local rental service to a trusted brand nationwide.'}
+            {description.split('\n')[0] ||
+              'Founded in 2010, AutoRent has grown from a small local rental service to a trusted brand nationwide.'}
           </p>
         </div>
       </section>
