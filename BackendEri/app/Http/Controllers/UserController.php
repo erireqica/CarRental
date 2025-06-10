@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -18,7 +16,6 @@ class UserController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Get the default user role ID (3 for regular user)
         $userRole = \App\Models\Role::where('name', 'user')->first();
         if (!$userRole) {
             throw new \Exception('Default user role not found');
@@ -27,13 +24,12 @@ class UserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password, // Store password as plain text
+            'password' => $request->password,
             'role_id' => $userRole->id,
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        // Add role name to the user object for frontend
         $userData = $user->toArray();
         $userData['role'] = $user->role->name;
 
@@ -60,7 +56,6 @@ class UserController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        // Add role name to the user object for frontend
         $userData = $user->toArray();
         $userData['role'] = $user->role->name ?? 'user';
 
@@ -84,14 +79,22 @@ class UserController extends Controller
         return response()->json($userData);
     }
 
-    public function getUsers()
+    public function getUsers(Request $request)
     {
+        if ($request->user()->role->name !== 'super_admin') {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+
         $users = User::all();
         return response()->json($users);
     }
 
     public function createUser(Request $request)
     {
+        if ($request->user()->role->name !== 'super_admin') {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -102,11 +105,10 @@ class UserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password, // Store password as plain text
+            'password' => $request->password,
             'role_id' => $request->role_id,
         ]);
 
-        // Add role name to the user object for frontend
         $userData = $user->toArray();
         $userData['role'] = $user->role->name;
 
@@ -115,6 +117,10 @@ class UserController extends Controller
 
     public function updateUser(Request $request, $id)
     {
+        if ($request->user()->role->name !== 'super_admin') {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+
         $user = User::findOrFail($id);
 
         $request->validate([
@@ -131,7 +137,7 @@ class UserController extends Controller
             $user->email = $request->email;
         }
         if ($request->has('password')) {
-            $user->password = $request->password; // Store password as plain text
+            $user->password = $request->password;
         }
         if ($request->has('role_id')) {
             $user->role_id = $request->role_id;
@@ -139,17 +145,20 @@ class UserController extends Controller
 
         $user->save();
 
-        // Add role name to the user object for frontend
         $userData = $user->toArray();
         $userData['role'] = $user->role->name;
 
         return response()->json($userData);
     }
 
-    public function deleteUser($id)
+    public function deleteUser(Request $request, $id)
     {
+        if ($request->user()->role->name !== 'super_admin') {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+
         $user = User::findOrFail($id);
         $user->delete();
         return response()->json(['message' => 'User deleted successfully']);
     }
-} 
+}
