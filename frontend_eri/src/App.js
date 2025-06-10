@@ -14,6 +14,8 @@ import LoginModal from './components/LoginModal';
 import HomeDashboard from './pages/HomeDashboard';
 import AboutUs from './pages/AboutUs';
 import AboutUsDashboard from './pages/AboutUsDashboard';
+import ProtectedRoute from './components/ProtectedRoute';
+
 
 function App() {
   return (
@@ -22,16 +24,74 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/cars" element={<CarsPage />} />
-          <Route path="/cars/add" element={<AddCarPage />} />
-          <Route path="/cars/edit/:id" element={<EditCarPage />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/users" element={<UserManagementPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/edit/:id" element={<EditCarPage />} />
-          <Route path="/dashboard/homepage" element={<HomeDashboard />} />
-          <Route path="/bookings" element={<BookingHistoryPage />} />
           <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/dashboard/about-us" element={<AboutUsDashboard />} />
+
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/homepage"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <HomeDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/about-us"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <AboutUsDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cars/add"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <AddCarPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cars/edit/:id"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <EditCarPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/edit/:id"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <EditCarPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/bookings"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <BookingHistoryPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/users"
+            element={
+              <ProtectedRoute requiredRole="super_admin">
+                <UserManagementPage />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
         <LoginModal />
         <ToastContainer

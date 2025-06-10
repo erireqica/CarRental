@@ -59,7 +59,7 @@ function CarsPage() {
             <h1 className="text-4xl font-extrabold text-blue-700">
               Discover Our Fleet
             </h1>
-            {user && hasPermission('super_admin') && (
+            {user && (hasPermission('admin') || hasPermission('super_admin')) && (
               <button
                 onClick={handleManageCars}
                 className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 shadow"

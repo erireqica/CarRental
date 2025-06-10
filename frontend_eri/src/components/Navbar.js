@@ -13,6 +13,16 @@ function Navbar() {
         : 'text-white hover:bg-blue-500 hover:shadow-sm'
     }`;
 
+  const renderDashboardLink = () => {
+    if (user && hasPermission('super_admin')) {
+      return <Link to="/users" className={navLinkStyle('/users')}>Dashboard</Link>;
+    }
+    if (user && hasPermission('admin')) {
+      return <Link to="/admin" className={navLinkStyle('/admin')}>Dashboard</Link>;
+    }
+    return null;
+  };
+
   return (
     <nav className="bg-blue-600 shadow-md">
       <div className="mx-auto px-6 py-4 flex justify-between items-center">
@@ -24,9 +34,7 @@ function Navbar() {
           <Link to="/" className={navLinkStyle('/')}>Home</Link>
           <Link to="/cars" className={navLinkStyle('/cars')}>Cars</Link>
           <Link to="/about-us" className={navLinkStyle('/about-us')}>About Us</Link>
-          {user && hasPermission('super_admin') && (
-            <Link to="/users" className={navLinkStyle('/users')}>Dashboard</Link>
-          )}
+          {renderDashboardLink()}
         </div>
 
         <div className="flex items-center space-x-4">
@@ -44,7 +52,7 @@ function Navbar() {
             <>
               <button
                 onClick={() => setIsLoginModalOpen(true)}
-                className="text-white hover:underline text-sm font-medium" 
+                className="text-white hover:underline text-sm font-medium"
               >
                 Login
               </button>

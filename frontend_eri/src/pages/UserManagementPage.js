@@ -6,18 +6,15 @@ import DashboardSidebar from '../components/DashboardSidebar';
 import axios from '../api/axios';
 
 function UserManagementPage() {
-  const [users, setUsers] = useState(null); 
+  const [users, setUsers] = useState(null);
   const [newUser, setNewUser] = useState({ name: '', email: '', password: '', role_id: 3 });
-  const { user, hasPermission } = useAuth();
+  const { user } = useAuth(); // ❗ removed hasPermission temporarily
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user || !hasPermission('super_admin')) {
-      navigate('/');
-      return;
-    }
+    if (!user) return; // 🔐 temporarily allow access as long as user exists
     fetchUsers();
-  }, [user, hasPermission, navigate]);
+  }, [user]);
 
   const fetchUsers = async () => {
     try {
@@ -57,9 +54,7 @@ function UserManagementPage() {
     }
   };
 
-  if (!user || !hasPermission('super_admin')) {
-    return null;
-  }
+  if (!user) return null; // 🔐 temporary check
 
   return (
     <>
