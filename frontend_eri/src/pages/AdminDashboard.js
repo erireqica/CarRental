@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../api/axios'; 
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DashboardSidebar from '../components/DashboardSidebar'; 
@@ -14,7 +14,7 @@ function AdminDashboard() {
 
   useEffect(() => {
     axios
-      .get('http://127.0.0.1:8000/api/cars')
+      .get('/cars')
       .then((res) => {
         setCars(res.data);
         setLoading(false);
@@ -27,7 +27,7 @@ function AdminDashboard() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this car?')) return;
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/cars/${id}`);
+      await axios.delete(`/cars/${id}`);
       setCars(cars.filter((car) => car.id !== id));
       toast.success('Car deleted successfully');
     } catch {

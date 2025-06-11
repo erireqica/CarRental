@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../api/axios';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DashboardSidebar from '../components/DashboardSidebar';
+import { toast } from 'react-toastify';
+
 
 function HomeDashboard() {
   const [content, setContent] = useState(null);
@@ -22,10 +24,10 @@ function HomeDashboard() {
     setSaving(true);
     try {
       await axios.put('http://127.0.0.1:8000/api/homepage', content);
-      alert('Homepage content updated!');
+      toast.success('Homepage content updated!');
     } catch (err) {
       console.error('Update failed', err);
-      alert('Update failed');
+      toast.error('Update failed');
     }
     setSaving(false);
   };

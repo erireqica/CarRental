@@ -8,11 +8,11 @@ import axios from '../api/axios';
 function UserManagementPage() {
   const [users, setUsers] = useState(null);
   const [newUser, setNewUser] = useState({ name: '', email: '', password: '', role_id: 3 });
-  const { user } = useAuth(); // ❗ removed hasPermission temporarily
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) return; // 🔐 temporarily allow access as long as user exists
+    if (!user) return;
     fetchUsers();
   }, [user]);
 
@@ -54,7 +54,7 @@ function UserManagementPage() {
     }
   };
 
-  if (!user) return null; // 🔐 temporary check
+  if (!user) return null; 
 
   return (
     <>
@@ -115,7 +115,6 @@ function UserManagementPage() {
                   </form>
                 </div>
 
-                {/* Users List */}
                 <div className="bg-white rounded-lg shadow-md p-6">
                   <h2 className="text-2xl font-bold mb-4">Users List</h2>
                   <div className="overflow-x-auto">

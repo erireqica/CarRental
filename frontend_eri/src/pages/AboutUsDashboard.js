@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DashboardSidebar from '../components/DashboardSidebar';
-import axios from 'axios';
+import axios from '../api/axios';
 import { toast } from 'react-toastify';
 
 function AboutUsDashboard() {
