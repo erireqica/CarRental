@@ -13,7 +13,8 @@ function AboutUs() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/about-us')
+    axios
+      .get('http://127.0.0.1:8000/api/about-us')
       .then(res => {
         if (res.data && Object.keys(res.data).length > 0) {
           setContent(res.data);
@@ -93,27 +94,22 @@ function AboutUs() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-6 py-16 text-gray-800">
-        <h2 className="text-4xl font-bold mb-8 text-center text-blue-800">Who We Are</h2>
-        <p className="max-w-4xl mx-auto text-lg leading-relaxed whitespace-pre-line">{description}</p>
-      </section>
-
       <section className="bg-gray-100 py-16">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-4xl font-bold mb-12 text-center text-blue-800">Our Journey</h2>
           <ol className="relative border-l-2 border-blue-400 max-w-4xl mx-auto space-y-10">
-            {[ 
-              { year: journey_1_year, event: journey_1_event }, 
-              { year: journey_2_year, event: journey_2_event }, 
-              { year: journey_3_year, event: journey_3_event }
-            ].map(({ year, event }, i) => (
-              year && event && (
+            {[
+              { year: journey_1_year, event: journey_1_event },
+              { year: journey_2_year, event: journey_2_event },
+              { year: journey_3_year, event: journey_3_event },
+            ].map(({ year, event }, i) =>
+              year && event ? (
                 <li key={i} className="relative pl-8">
                   <span className="absolute left-[-20px] top-1 text-blue-600 font-bold text-xl">{year}</span>
                   <p className="text-lg text-gray-700">{event}</p>
                 </li>
-              )
-            ))}
+              ) : null
+            )}
           </ol>
         </div>
       </section>
@@ -122,19 +118,23 @@ function AboutUs() {
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold mb-12 text-blue-800">Meet The Team</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 max-w-5xl mx-auto">
-            {[ 
+            {[
               { name: team_1_name, role: team_1_role, image: team_1_image },
               { name: team_2_name, role: team_2_role, image: team_2_image },
               { name: team_3_name, role: team_3_role, image: team_3_image },
-            ].map(({ name, role, image }, i) => (
-              name && role && image && (
+            ].map(({ name, role, image }, i) =>
+              name && role && image ? (
                 <div key={i} className="bg-white rounded-lg p-6 shadow text-left">
-                  <img src={image} alt={name} className="w-28 h-28 rounded-full mx-auto mb-4 object-cover" />
+                  <img
+                    src={image}
+                    alt={name}
+                    className="w-28 h-28 rounded-full mx-auto mb-4 object-cover"
+                  />
                   <h3 className="text-xl font-semibold mb-1">{name}</h3>
                   <p className="text-gray-600">{role}</p>
                 </div>
-              )
-            ))}
+              ) : null
+            )}
           </div>
         </div>
       </section>
