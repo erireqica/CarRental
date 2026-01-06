@@ -6,7 +6,7 @@ import axios from '../api/axios';
 import { toast } from 'react-toastify';
 
 function AboutUsDashboard() {
-  const [content, setContent] = useState(null); // changed initial value to null
+  const [content, setContent] = useState(null); 
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {

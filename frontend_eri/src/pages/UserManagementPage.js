@@ -72,7 +72,6 @@ function UserManagementPage() {
               </div>
             ) : (
               <>
-                {/* Add New User Form */}
                 <div className="bg-white rounded-lg shadow-md p-6 mb-8">
                   <h2 className="text-2xl font-bold mb-4">Add New User</h2>
                   <form onSubmit={handleAddUser} className="space-y-4">

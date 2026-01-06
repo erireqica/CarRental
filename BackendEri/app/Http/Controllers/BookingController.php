@@ -22,12 +22,10 @@ class BookingController extends Controller {
 
         $car = Car::findOrFail($request->car_id);
         
-        // Check if car is available
         if (!$car->available) {
             return response()->json(['message' => 'Car is not available'], 400);
         }
 
-        // Check for existing bookings that overlap with the requested dates
         $existingBooking = Booking::where('car_id', $request->car_id)
             ->where('status', '!=', 'cancelled')
             ->where(function ($query) use ($request) {
@@ -44,7 +42,6 @@ class BookingController extends Controller {
             return response()->json(['message' => 'Car is already booked for these dates'], 400);
         }
 
-        // Calculate total price
         $startDate = Carbon::parse($request->start_date);
         $endDate = Carbon::parse($request->end_date);
         $totalDays = $endDate->diffInDays($startDate);
@@ -88,7 +85,6 @@ class BookingController extends Controller {
     public function cancel($id) {
         $booking = Booking::findOrFail($id);
 
-        // Check if user is authorized to cancel (either super admin or booking owner)
         if (!Auth::user()->hasRole('super_admin') && Auth::id() !== $booking->user_id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }

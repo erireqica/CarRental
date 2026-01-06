@@ -35,13 +35,11 @@ class HomepageContentController extends Controller
         }
 
         HomepageContent::create([
-            // HERO section
             'hero_title' => 'Find Your Perfect Ride with AutoRent',
             'hero_subtitle' => 'Affordable, reliable, and ready when you are.',
             'hero_button_text' => 'Browse Cars',
             'hero_background_url' => 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d',
 
-            // CATEGORY section
             'section1_title' => 'Something for Everyone',
 
             'card1_title' => 'SUVs for Family Adventures',
@@ -56,8 +54,7 @@ class HomepageContentController extends Controller
             'card1_type' => 'SUV',
             'card2_type' => 'Sedan',
             'card3_type' => 'Hatchback',
-
-            // WHY CHOOSE US section
+            
             'card4_title' => 'Reliable Vehicles',
             'card4_image' => 'https://img.icons8.com/ios-filled/100/4a90e2/car--v1.png',
             'card4_description' => 'We offer top-notch, well-maintained cars for all your needs.',

@@ -9,13 +9,11 @@ class AboutUsContentController extends Controller
 {
     public function index()
     {
-        // Return the first About Us record
         return AboutUsContent::first();
     }
 
     public function update(Request $request)
     {
-        // Validate all the fields individually
         $data = $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
