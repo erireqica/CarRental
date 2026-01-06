@@ -7,6 +7,8 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\HomepageContentController;
 use App\Http\Controllers\AboutUsContentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CarTypeController;
 
 
 Route::get('/homepage', [HomepageContentController::class, 'index']);
@@ -38,3 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/logout', [UserController::class, 'logout']);
 });
+
+Route::get('/brands', [BrandController::class, 'index']);
+Route::get('/brands/{brand}/models', [BrandController::class, 'models']);
+Route::get('/car-types', [CarTypeController::class, 'index']);

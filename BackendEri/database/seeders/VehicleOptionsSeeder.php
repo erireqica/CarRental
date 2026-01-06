@@ -10,7 +10,7 @@ class VehicleOptionsSeeder extends Seeder
     public function run(): void
     {
         // Car types
-        $types = ['SUV', 'Sedan', 'Hatchback', 'Coupe', 'Wagon', 'Convertible', 'Van'];
+        $types = ['SUV', 'Sedan', 'Hatchback', 'Coupe', 'Wagon', 'Convertible', 'Van', 'Sports'];
         foreach ($types as $t) {
             DB::table('car_types')->updateOrInsert(['name' => $t], ['name' => $t]);
         }
@@ -22,7 +22,9 @@ class VehicleOptionsSeeder extends Seeder
             'Audi' => ['A3', 'A4', 'A6', 'Q3', 'Q5', 'Q7'],
             'Volkswagen' => ['Golf', 'Passat', 'Polo', 'Tiguan', 'Touareg'],
             'Toyota' => ['Corolla', 'Yaris', 'Camry', 'RAV4', 'Land Cruiser'],
-            'Ford' => ['Fiesta', 'Focus', 'Mondeo', 'Kuga', 'Explorer'],
+            'Ford' => ['Fiesta', 'Focus', 'Mondeo', 'Kuga', 'Explorer', 'Mustang'],
+            'Honda' => ['Civic', 'CR-V'],
+            'Porsche' => ['911', 'Cayenne', 'Macan'],
         ];
 
         foreach ($data as $brandName => $models) {
