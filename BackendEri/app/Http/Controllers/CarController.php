@@ -12,7 +12,9 @@ class CarController extends Controller
 {
     public function index()
     {
-        return response()->json(Car::all());
+        return response()->json(
+        Car::with(['brandRef', 'vehicleModel', 'carType',])->get()
+    );
     }
 
     public function store(Request $request)
@@ -43,7 +45,8 @@ class CarController extends Controller
     $car = Car::create([
         'name' => $data['name'],
         'brand' => $brandName,    
-        'type' => $typeName,      
+        'type' => $typeName,    
+        'year' => $data['year'] ?? null,  
         'price_per_day' => $data['price_per_day'],
         'available' => $data['available'] ?? true,
         'image_url' => $data['image_url'] ?? null,
@@ -53,32 +56,73 @@ class CarController extends Controller
         'car_type_id' => $data['car_type_id'],
     ]);
 
-    return response()->json(['message' => 'Car added successfully', 'car' => $car]);
+    return response()->json([
+        'message' => 'Car added successfully',
+        'car' => $car->load(['brandRef', 'vehicleModel', 'carType'])
+    ], 201);
 }
 
     public function show(Car $car)
     {
-        return response()->json($car);
+        return response()->json(
+            $car->load(['brandRef', 'vehicleModel', 'carType'])
+        );
     }
 
     public function update(Request $request, Car $car)
     {
-        $car->name= $request->name ?? $car->name;
-        $car->brand = $request->brand ?? $car->brand;
-        $car->type = $request->type ?? $car->type;
-        $car->price_per_day = $request->price_per_day ?? $car->price_per_day;
-        $car->available=$request->available ?? $car->available;
-        $car->image_url = $request->image_url ?? $car->image_url;
+        $data = $request->validate([
+            'name' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'year' => ['sometimes', 'nullable', 'integer', 'min:1980', 'max:' . (date('Y') + 1)],
+            'price_per_day' => ['sometimes', 'numeric', 'min:0'],
+            'available' => ['sometimes', 'boolean'],
+            'image_url' => ['sometimes', 'nullable', 'string', 'max:2048'],
+
+            'brand_id' => ['sometimes', 'nullable', 'exists:brands,id'],
+            'vehicle_model_id' => ['sometimes', 'nullable', 'exists:vehicle_models,id'],
+            'car_type_id' => ['sometimes', 'nullable', 'exists:car_types,id'],
+
+            'brand' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'type'  => ['sometimes', 'nullable', 'string', 'max:255'],
+        ]);
+
+        $finalBrandId = array_key_exists('brand_id', $data) ? $data['brand_id'] : $car->brand_id;
+        $finalModelId = array_key_exists('vehicle_model_id', $data) ? $data['vehicle_model_id'] : $car->vehicle_model_id;
+
+        if ($finalBrandId && $finalModelId) {
+            $ok = VehicleModel::where('id', $finalModelId)
+                ->where('brand_id', $finalBrandId)
+                ->exists();
+
+            if (!$ok) {
+                return response()->json(['message' => 'Selected model does not belong to selected brand'], 422);
+            }
+        }
+
+        $car->fill($data);
+
+        if (array_key_exists('brand_id', $data)) {
+            $car->brand = $data['brand_id']
+                ? Brand::find($data['brand_id'])?->name
+                : null;
+        }
+
+        if (array_key_exists('car_type_id', $data)) {
+            $car->type = $data['car_type_id']
+                ? CarType::find($data['car_type_id'])?->name
+                : null;
+        }
 
         $car->save();
 
-        return response()->json(['message'=>'Car updated successfully','car'=>$car]);
+        return response()->json([
+            'message' => 'Car updated successfully',
+            'car' => $car->load(['brandRef', 'vehicleModel', 'carType'])
+        ]);
     }
 
-    public function destroy(Car $car)
-    {
-        $car->delete();
-
-        return response()->json(['message'=> 'Car deleted successfully']);
+    public function destroy(Car $car) { 
+        $car->delete(); 
+        return response()->json(['message'=> 'Car deleted successfully']); 
     }
 }

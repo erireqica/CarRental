@@ -20,6 +20,8 @@ class Car extends Model
         'car_type_id',
     ];
 
+    
+
     public function brandRef()
     {
         return $this->belongsTo(Brand::class, 'brand_id');
