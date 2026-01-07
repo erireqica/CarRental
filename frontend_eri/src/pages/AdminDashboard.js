@@ -35,15 +35,14 @@ function AdminDashboard() {
     }
   };
 
-  const getVehicleLabel = (car) => {
-    const brand = car?.brandRef?.name || car?.brand || '';
-    const model = car?.vehicleModel?.name || '';
-    return `${brand}${model ? ` ${model}` : ''}`.trim();
-  };
+  const getBrandLabel = (car) =>
+    car?.brandRef?.name || car?.brand_ref?.name || car?.brand || '';
 
-  const getTypeLabel = (car) => {
-    return car?.carType?.name || car?.type || '';
-  };
+  const getModelLabel = (car) =>
+    car?.vehicleModel?.name || car?.vehicle_model?.name || '';
+
+  const getTypeLabel = (car) =>
+    car?.carType?.name || car?.car_type?.name || car?.type || '';
 
   return (
     <>
@@ -74,12 +73,13 @@ function AdminDashboard() {
                   <table className="min-w-full w-full table-fixed bg-white">
                     <thead className="sticky top-0 z-10 bg-gray-100 text-left">
                       <tr>
-                        <th className="py-3 px-4 w-[26%]">Vehicle</th>
-                        <th className="py-3 px-4 w-[18%]">Type</th>
+                        <th className="py-3 px-4 w-[16%]">Brand</th>
+                        <th className="py-3 px-4 w-[18%]">Model</th>
+                        <th className="py-3 px-4 w-[16%]">Type</th>
                         <th className="py-3 px-4 w-[10%]">Year</th>
-                        <th className="py-3 px-4 w-[14%]">Price</th>
-                        <th className="py-3 px-4 w-[12%]">Available</th>
-                        <th className="py-3 px-4 w-[20%]">Actions</th>
+                        <th className="py-3 px-4 w-[12%]">Price</th>
+                        <th className="py-3 px-4 w-[10%]">Available</th>
+                        <th className="py-3 px-4 w-[18%]">Actions</th>
                       </tr>
                     </thead>
 
@@ -87,7 +87,8 @@ function AdminDashboard() {
                       {cars.length > 0 ? (
                         cars.map((car) => (
                           <tr key={car.id} className="border-t">
-                            <td className="py-2 px-4 truncate">{getVehicleLabel(car)}</td>
+                            <td className="py-2 px-4 truncate">{getBrandLabel(car)}</td>
+                            <td className="py-2 px-4 truncate">{getModelLabel(car) || '-'}</td>
                             <td className="py-2 px-4 truncate">{getTypeLabel(car)}</td>
                             <td className="py-2 px-4">{car.year ?? '-'}</td>
                             <td className="py-2 px-4">${car.price_per_day}</td>
@@ -110,7 +111,7 @@ function AdminDashboard() {
                         ))
                       ) : (
                         <tr>
-                          <td colSpan="6" className="text-center py-10 text-xl text-gray-500 font-medium">
+                          <td colSpan="7" className="text-center py-10 text-xl text-gray-500 font-medium">
                             No cars found. Add a new car to get started.
                           </td>
                         </tr>

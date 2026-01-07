@@ -17,15 +17,42 @@ class VehicleOptionsSeeder extends Seeder
 
         // Brands + Models
         $data = [
-            'BMW' => ['1 Series', '3 Series', '5 Series', 'X1', 'X3', 'X5'],
-            'Mercedes-Benz' => ['A-Class', 'C-Class', 'E-Class', 'GLA', 'GLC', 'GLE'],
-            'Audi' => ['A3', 'A4', 'A6', 'Q3', 'Q5', 'Q7'],
-            'Volkswagen' => ['Golf', 'Passat', 'Polo', 'Tiguan', 'Touareg'],
-            'Toyota' => ['Corolla', 'Yaris', 'Camry', 'RAV4', 'Land Cruiser'],
-            'Ford' => ['Fiesta', 'Focus', 'Mondeo', 'Kuga', 'Explorer', 'Mustang'],
-            'Honda' => ['Civic', 'CR-V'],
-            'Porsche' => ['911', 'Cayenne', 'Macan'],
+            'BMW' => ['1 Series','2 Series','3 Series','4 Series','5 Series','7 Series','X1','X2','X3','X4','X5','X6'],
+            'Mercedes-Benz' => ['A-Class','B-Class','C-Class','E-Class','S-Class','GLA','GLB','GLC','GLE','GLS'],
+            'Audi' => ['A1','A3','A4','A5','A6','A7','A8','Q2','Q3','Q5','Q7','Q8'],
+            'Volkswagen' => ['Golf','Passat','Polo','Tiguan','Touareg','T-Roc','Arteon'],
+            'Toyota' => ['Corolla','Yaris','Camry','Prius','RAV4','C-HR','Highlander','Land Cruiser'],
+            'Ford' => ['Fiesta','Focus','Mondeo','Kuga','Puma','Explorer','Mustang'],
+            'Honda' => ['Civic','Accord','CR-V','HR-V'],
+            'Porsche' => ['911','Cayenne','Macan','Panamera','Taycan'],
+
+            'Hyundai' => ['i10','i20','i30','Elantra','Tucson','Santa Fe','Kona'],
+            'Kia' => ['Picanto','Rio','Ceed','Sportage','Sorento','Stonic'],
+            'Nissan' => ['Micra','Juke','Qashqai','X-Trail','Leaf'],
+            'Mazda' => ['Mazda2','Mazda3','Mazda6','CX-3','CX-5','CX-60'],
+            'Subaru' => ['Impreza','Legacy','Forester','Outback','XV'],
+            'Mitsubishi' => ['ASX','Outlander','Eclipse Cross','L200'],
+
+            'Renault' => ['Clio','Megane','Captur','Kadjar','Austral'],
+            'Peugeot' => ['208','308','508','2008','3008','5008'],
+            'Citroën' => ['C3','C4','C5 Aircross','Berlingo'],
+            'Opel' => ['Corsa','Astra','Insignia','Mokka','Grandland'],
+            'Skoda' => ['Fabia','Octavia','Superb','Kamiq','Karoq','Kodiaq'],
+            'SEAT' => ['Ibiza','Leon','Arona','Ateca','Tarraco'],
+            'Dacia' => ['Sandero','Duster','Jogger','Logan'],
+            'Fiat' => ['500','Panda','Tipo','500X'],
+            'Alfa Romeo' => ['Giulia','Stelvio','Tonale'],
+
+            'Volvo' => ['S60','S90','V60','V90','XC40','XC60','XC90'],
+            'Jaguar' => ['XE','XF','F-Pace','E-Pace','I-Pace'],
+            'Land Rover' => ['Range Rover Evoque','Range Rover Sport','Discovery','Defender'],
+            'Mini' => ['Cooper','Countryman','Clubman'],
+            'Tesla' => ['Model 3','Model S','Model X','Model Y'],
+
+            'Chevrolet' => ['Spark','Cruze','Malibu','Equinox','Tahoe'],
+            'Jeep' => ['Renegade','Compass','Cherokee','Grand Cherokee','Wrangler'],
         ];
+
 
         foreach ($data as $brandName => $models) {
             DB::table('brands')->updateOrInsert(['name' => $brandName], ['name' => $brandName]);
